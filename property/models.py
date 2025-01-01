@@ -1,3 +1,65 @@
 from django.db import models
+from django.utils import timezone
+
+from django.contrib.auth.models import User
+
+from django.utils.text import slugify
 
 # Create your models here.
+class Property(models.Model):
+    name = models.CharField(max_length=66)
+    image =models.ImageField(upload_to="property/")
+    price = models.IntegerField(default=0)
+    description = models.TextField(max_length=20000)
+    place = models.ForeignKey("Place", related_name=("property_place"), on_delete=models.CASCADE)
+    category = models.ForeignKey("Category", related_name=("property_category"), on_delete=models.CASCADE)
+    cteated_at = models.DateTimeField(default= timezone.now)
+    slug = models.SlugField(null = True , blank = True)
+
+
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super(Property, self).save(*args, **kwargs)
+
+
+    def __str__(self):
+        return self.name
+    
+
+
+class PropertyImage(models.Model):
+
+    property = models.ForeignKey("Property", related_name="property_image", on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='propertyimages/')
+
+    def __str__(self):
+        return str(self.property)
+    
+class Place(models.Model):
+
+    name = models.CharField( max_length=500)
+    image = models.ImageField(upload_to='places/')
+
+
+    def __str__(self):
+        return self.name
+
+
+class Category(models.Model):
+
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+
+class PropertyBook(models.Model):
+    user = models.ForeignKey(User, related_name='book_owner', on_delete=models.CASCADE)
+    property = models.ForeignKey('Property', related_name='book_property', on_delete=models.CASCADE)
+    date_form = models.DateField(default=timezone.now)
+    date_to = models.DateField(default=timezone.now)
+
+    def __str__(self):
+        return str(self.property)

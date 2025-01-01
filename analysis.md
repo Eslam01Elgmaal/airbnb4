@@ -2,20 +2,26 @@
 
 
 
-
-
           Property:
           -name
           -image
           -price / day
           -description
-
+          -place*
+          -category*
+          
+          -rating
+            room show rating
+            add rate [booking]
+            room ----> avg rating
 
           -book  *
             book
             check avaiblity
 
-            Users
+
+
+    Users
 
 
           blog: 
