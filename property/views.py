@@ -8,7 +8,7 @@ class PropertyList(ListView):
 
 
 class PropertyDetail(DetailView):
-    pass
+    model = Property
 
         ## book    
 

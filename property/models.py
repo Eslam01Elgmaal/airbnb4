@@ -4,15 +4,17 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 from django.utils.text import slugify
+from django.urls import reverse
 
 # Create your models here.
 class Property(models.Model):
     name = models.CharField(max_length=66)
     image =models.ImageField(upload_to="property/")
+    num_bed = models.IntegerField(default=1)
     price = models.IntegerField(default=0)
     description = models.TextField(max_length=20000)
     place = models.ForeignKey("Place", related_name=("property_place"), on_delete=models.CASCADE)
-    category = models.ForeignKey("Category", related_name=("property_category"), on_delete=models.CASCADE)
+    num_bathroom = models.IntegerField(default=1)
     cteated_at = models.DateTimeField(default= timezone.now)
     slug = models.SlugField(null = True , blank = True)
 
@@ -26,6 +28,11 @@ class Property(models.Model):
 
     def __str__(self):
         return self.name
+
+
+    def get_absolute_url(self):
+        return reverse("property:property_detail", kwargs={"slug": self.slug})
+    
     
 
 
