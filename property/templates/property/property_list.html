@@ -34,7 +34,7 @@
                                         <small class="border-end me-3 pe-3"><i class="fa fa-bath text-primary me-2"></i>{{property.num_bathroom}}</small>
                                         <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
                                     </div>
-                                    <p class="text-body mb-3">{{property.description}}</p>
+                                    <p class="text-body mb-3">{{property.description|safe|truncatewords:17}}}</p>
                                     <div class="d-flex justify-content-between">
                                         <a class="btn btn-sm btn-primary rounded py-2 px-4" href="{{property.get_absolute_url}}">View Detail</a>
                                         <a class="btn btn-sm btn-dark rounded py-2 px-4" href="{{property.get_absolute_url}}">Book Now</a>

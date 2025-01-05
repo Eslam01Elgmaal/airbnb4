@@ -13,6 +13,7 @@ class Property(models.Model):
     num_bed = models.IntegerField(default=1)
     price = models.IntegerField(default=0)
     description = models.TextField(max_length=20000)
+    category = models.ForeignKey("Category",related_name='propert_category', on_delete=models.CASCADE)
     place = models.ForeignKey("Place", related_name=("property_place"), on_delete=models.CASCADE)
     num_bathroom = models.IntegerField(default=1)
     cteated_at = models.DateTimeField(default= timezone.now)
@@ -62,11 +63,20 @@ class Category(models.Model):
         return self.name
 
 
+COUNT = [
+    ('1', '1'),
+    ('2', '2'),
+    ('3', '3'),
+    ('4', '4'),
+]
+
 class PropertyBook(models.Model):
     user = models.ForeignKey(User, related_name='book_owner', on_delete=models.CASCADE)
     property = models.ForeignKey('Property', related_name='book_property', on_delete=models.CASCADE)
     date_form = models.DateField(default=timezone.now)
     date_to = models.DateField(default=timezone.now)
+    guest = models.CharField(max_length=2 , choices=COUNT)
+    children = models.CharField(max_length=2 , choices=COUNT)
 
     def __str__(self):
         return str(self.property)
