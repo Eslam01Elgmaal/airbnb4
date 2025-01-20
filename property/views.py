@@ -9,7 +9,7 @@ from django.shortcuts import redirect, render
 
 class PropertyList(ListView):
     model = Property
-    paginate_by = 1
+    paginate_by = 3
 
 class PropertyDetail(FormMixin, DetailView):
     model = Property
